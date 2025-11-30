@@ -206,7 +206,7 @@
 
             background: transparent;
             text-align: center;
-            color: var(--secondary-purple); /* 紫紅色文字 */
+            color: var(--secondary-purple); 
             font-weight: 600; 
             font-size: 0.9em;
         }
@@ -217,7 +217,7 @@
             bottom: 0;
             width: 200px;
             height: 100vh;
-            z-index: 0;
+            z-index: 5;
             overflow: hidden;
             background: transparent; 
         }
@@ -329,56 +329,127 @@
         }
 
         .feedback-btn {
-        position: absolute;
-        top: 20px; 
-        left: 230px; 
-        z-index: 100;  
-        
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        
-        background: transparent; 
-        color: var(--secondary-purple); 
-        border: 2px solid var(--secondary-purple); 
-        padding: 8px 25px; 
-        border-radius: 30px;
-        font-size: 0.95em;
-        font-weight: 700; 
-        text-decoration: none;
-        transition: all 0.3s ease;
+            position: absolute;
+            top: 20px; 
+            left: 230px; 
+            z-index: 100;  
+            
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            
+            background: transparent; 
+            color: var(--secondary-purple); 
+            border: 2px solid var(--secondary-purple); 
+            padding: 8px 25px; 
+            border-radius: 30px;
+            font-size: 0.95em;
+            font-weight: 700; 
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
 
         .feedback-btn:hover {
-        background: var(--secondary-purple);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(var(--secondary-purple), 0.3);
-    }
+            background: var(--secondary-purple);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(var(--secondary-purple), 0.3);
+        }
 
         @media (max-width: 1450px) {
             .feedback-btn {
                 left: 20px; 
             }
         }
+
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;        
+            pointer-events: none; 
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px); 
+            opacity: 0.8;             
+            animation: floatOrb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background: #cdb4db;        
+            top: -50px;
+            left: -50px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            
+            background: #cb91a1; 
+            
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s; 
+        }
+
+        .orb-3 {
+            width: 300px;
+            height: 300px;
+            background: #a2d2ff; 
+            top: 40%;
+            left: 30%;
+            opacity: 0.8; 
+            
+            animation-duration: 25s;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatOrb {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+        }
     </style>
 </head>
 
-<div class="sidebar left-sidebar">
+<body>
+    <div class="sidebar left-sidebar">
         <img src="https://i.pinimg.com/736x/9a/0d/d8/9a0dd888fbbd0e0211d3bc0936f18a4d.jpg" class="slide active" alt="左圖1">
         <img src="https://i.pinimg.com/736x/9b/5b/10/9b5b10779938d7d61cf578df77b2a634.jpg" class="slide" alt="左圖2">
         <img src="https://i.pinimg.com/736x/90/25/20/90252032cbed0908ea3ea3f98aef1608.jpg" class="slide" alt="左圖3">
     </div>
 
-<div class="sidebar right-sidebar">
-        <img src="https://ppt.cc/f7wcJx@jpg" class="slide active" alt="右圖1">
-        <img src="https://ppt.cc/f5Inyx@jpg" class="slide" alt="右圖2">
-        <img src="https://ppt.cc/fnxHLx@jpg" class="slide" alt="右圖3">
-</div>
-<a href="https://forms.gle/BWrv15Ay6spDe6NN6" target="_blank" class="feedback-btn">
-    📝 意見回饋
-</a>
-<body>
+    <div class="sidebar right-sidebar">
+            <img src="https://ppt.cc/f7wcJx@jpg" class="slide active" alt="右圖1">
+            <img src="https://ppt.cc/f5Inyx@jpg" class="slide" alt="右圖2">
+            <img src="https://ppt.cc/fnxHLx@jpg" class="slide" alt="右圖3">
+    </div>
+
+    <a href="https://forms.gle/BWrv15Ay6spDe6NN6" target="_blank" class="feedback-btn">
+        📝 意見回饋
+    </a>
+
+    <div class="bg-decoration">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
     <div class="container">
         <h1 class="main-title">MANI filter</h1>
         <p class="subtitle">告別選擇困難，動漫、漫畫新世界由你主宰！</p>
