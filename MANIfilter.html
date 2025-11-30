@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANIfilter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* 全局設定 */
+        :root {
+            --primary-blue: #e093de; 
+            --secondary-purple: #79034f; 
+            --light-blue: #F0F8FF;
+            --text-dark: #333;
+            --text-light: #f9f9f9;
+            --card-bg: white;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.2);
+            --shadow-vibrant: rgba(173, 84, 167, 0.537); 
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0; 
+            padding: 0;
+            width: 100%; 
+            overflow-x: hidden; 
+        }
+        
+        body {
+            font-family: 'Poppins', 'Noto Sans TC', sans-serif;
+            background: linear-gradient(135deg, #FFF0F5 0%, #FFDEE9 100%); 
+            color: var(--text-dark);
+            min-height: 100vh;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+        }
+
+        /* 容器 */
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px 0; 
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+        }
+
+        /* 標題 */
+        .main-title {
+            font-size: 3.8em; 
+            color: var(--secondary-purple); 
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 0 10px var(--shadow-vibrant); 
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: 1.4em;
+            color: #555;
+            margin-bottom: 50px;
+            font-weight: 400;
+        }
+
+        .intro-section {
+            width: 100%;
+            max-width: 800px;
+            margin: 50px auto; 
+            
+            padding: 30px; 
+            background: rgba(255, 255, 255, 0.95); 
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); 
+            border: 1px solid #e0e0e0;
+        }
+
+        .intro-heading {
+            font-size: 1.6em;
+            color: var(--secondary-purple); 
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .intro-text-group {
+            display: flex;
+            justify-content: center;
+            gap: 50px; /* 增加間距 */
+            margin-top: 20px;
+            color: var(--text-dark); 
+        }
+
+        .intro-feature {
+            flex-basis: 45%; /* 佔比增加 */
+            text-align: left;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        
+        .intro-feature h3 {
+            font-size: 1.3em;
+            color: var(--primary-blue); 
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--primary-blue);
+            padding-bottom: 8px;
+        }
+
+        .intro-feature p {
+            font-size: 1.1em;
+            color: #555; 
+        }
+
+        /* 卡片容器 */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center; 
+            gap: 40px; 
+            margin-top: 15px;
+            width: 100%; 
+        }
+
+        /* 卡片樣式 (重點美化) */
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px var(--shadow-medium);
+            padding: 15px;
+            width: 380px; 
+            height: auto; 
+            min-height: 280px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease; 
+            cursor: default; 
+            position: relative;
+            border: 1px solid #e0e0e0;
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.03); 
+            box-shadow: 0 25px 60px rgba(var(--secondary-purple), 0.5); 
+            border-color: var(--primary-blue);
+        }
+
+        .card-title {
+            font-size: 2.3em;
+            font-weight: 700;
+            color: var(--secondary-purple);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .card-description {
+            font-size: 1.15em;
+            color: #555;
+            line-height: 1.6;
+            flex-grow: 1; 
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        .card-button {
+            text-decoration: none; 
+            display: inline-block; 
+            cursor: pointer;
+            
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-purple)); 
+            color: var(--text-light);
+            padding: 15px 35px; 
+            border: none;
+            border-radius: 50px;
+            font-size: 1.15em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(var(--secondary-purple), 0.4); 
+            letter-spacing: 0.8px;
+        }
+
+        .card-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(var(--secondary-purple), 0.5);
+            background: linear-gradient(45deg, var(--secondary-purple), var(--primary-blue));
+        }
+
+        /* 頁腳 */
+        .footer {
+            position: relative;
+            width: 100%; 
+
+            margin-top: 50px; 
+            padding: 20px 0;
+
+            background: transparent;
+            text-align: center;
+            color: var(--secondary-purple); /* 紫紅色文字 */
+            font-weight: 600; 
+            font-size: 0.9em;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 200px;
+            height: 100vh;
+            z-index: 0;
+            overflow: hidden;
+            background: transparent; 
+        }
+
+        .left-sidebar {
+            left: 0;
+        }
+
+        .right-sidebar {
+            right: 0;
+        }
+
+        .sidebar .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            
+            opacity: 0;
+            transform: scale(1); 
+
+            transition: opacity 1s ease-in-out;
+            
+            transform-origin: center; 
+            will-change: opacity, transform;
+        }
+
+        .sidebar .slide.active {
+            opacity: 1;
+            animation: shrinkEffect 4s ease-out forwards;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (max-width: 1450px) {
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @keyframes shrinkEffect {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0.9); 
+            }
+        }
+
+        /* RWD 響應式設計 */
+        @media (max-width: 900px) {
+            .intro-section {
+                padding: 20px 5%; 
+                margin-bottom: 40px;
+            }
+            .intro-text-group {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .intro-heading {
+                font-size: 1.5em;
+            }
+            .main-title {
+                font-size: 2.5em;
+            }
+            .subtitle {
+                font-size: 1em;
+                margin-bottom: 30px;
+            }
+            .card {
+                width: 90%; 
+                max-width: 450px;
+                height: auto; 
+                padding: 25px;
+            }
+            .card-grid {
+                gap: 30px;
+            }
+            .card-title {
+                font-size: 1.8em;
+            }
+            .card-description {
+                font-size: 1em;
+            }
+            .card-icon {
+                font-size: 3.5em;
+            }
+            .card-image {
+                max-height: 150px;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .main-title {
+                font-size: 2em;
+            }
+            .subtitle {
+                font-size: 0.9em;
+            }
+            .card-button {
+                padding: 10px 20px;
+                font-size: 1em;
+            }
+        }
+
+        .feedback-btn {
+        position: absolute;
+        top: 20px; 
+        left: 230px; 
+        z-index: 100;  
+        
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        
+        background: transparent; 
+        color: var(--secondary-purple); 
+        border: 2px solid var(--secondary-purple); 
+        padding: 8px 25px; 
+        border-radius: 30px;
+        font-size: 0.95em;
+        font-weight: 700; 
+        text-decoration: none;
+        transition: all 0.3s ease;
+        }
+
+        .feedback-btn:hover {
+        background: var(--secondary-purple);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(var(--secondary-purple), 0.3);
+    }
+
+        @media (max-width: 1450px) {
+            .feedback-btn {
+                left: 20px; 
+            }
+        }
+    </style>
+</head>
+
+<div class="sidebar left-sidebar">
+        <img src="https://i.pinimg.com/736x/9a/0d/d8/9a0dd888fbbd0e0211d3bc0936f18a4d.jpg" class="slide active" alt="左圖1">
+        <img src="https://i.pinimg.com/736x/9b/5b/10/9b5b10779938d7d61cf578df77b2a634.jpg" class="slide" alt="左圖2">
+        <img src="https://i.pinimg.com/736x/90/25/20/90252032cbed0908ea3ea3f98aef1608.jpg" class="slide" alt="左圖3">
+    </div>
+
+<div class="sidebar right-sidebar">
+        <img src="https://ppt.cc/f7wcJx@jpg" class="slide active" alt="右圖1">
+        <img src="https://ppt.cc/f5Inyx@jpg" class="slide" alt="右圖2">
+        <img src="https://ppt.cc/fnxHLx@jpg" class="slide" alt="右圖3">
+</div>
+<a href="https://forms.gle/BWrv15Ay6spDe6NN6" target="_blank" class="feedback-btn">
+    📝 意見回饋
+</a>
+<body>
+    <div class="container">
+        <h1 class="main-title">MANI filter</h1>
+        <p class="subtitle">告別選擇困難，動漫、漫畫新世界由你主宰！</p>
+
+         <div class="card-grid">
+            
+            <div class="card">
+                <h2 class="card-title">動漫篩選器</h2>
+                <p class="card-description">
+                    讓你可以根據狀態、風格、主角性格等條件，輕鬆找出你下一部想看的動畫作品。
+                </p>
+                <a href="https://anime-filter-n2so.onrender.com" class="card-button" target="_blank">立即前往</a>
+            </div>
+
+            <div class="card">
+                <h2 class="card-title">漫畫篩選器</h2>
+                <p class="card-description">
+                    讓你能利用故事背景、劇情類型、男主外表、女主外表等條件，快速找到符合你喜好的優質漫畫！
+                </p>
+                <a href="https://manhua-filter.onrender.com" class="card-button" target="_blank">立即前往</a>
+            </div>
+        </div>
+
+        <section class="intro-section">
+            <h2 class="intro-heading">終結你的選擇困難症</h2>
+            
+            <div class="intro-text-group">
+                <div class="intro-feature">
+                    <h3>🔍 精準篩選</h3>
+                    <p>根據類型、評分、連載狀態、故事背景、主角外表等多面向條件，快速鎖定你的下一部作品！</p>
+                </div>
+                <div class="intro-feature">
+                    <h3>🎲 轉盤決策</h3>
+                    <p>一鍵將心儀作品加入清單，點擊轉盤，讓趣味的隨機選擇功能為你終結選擇困難！</p>
+                </div>
+            </div>
+            
+        </section>
+       
+    </div>
+
+    <footer class="footer">
+        &copy; MANI filter. All rights reserved by 洪于涵 施樂琦
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const leftSlides = document.querySelectorAll('.left-sidebar .slide');
+            const rightSlides = document.querySelectorAll('.right-sidebar .slide');
+            let currentSlide = 0;
+            const slideInterval = 4000;
+
+            function nextSlide() {
+                leftSlides[currentSlide].classList.remove('active');
+                rightSlides[currentSlide].classList.remove('active');
+
+                currentSlide = (currentSlide + 1) % leftSlides.length;
+
+                leftSlides[currentSlide].classList.add('active');
+                rightSlides[currentSlide].classList.add('active');
+            }
+
+            setInterval(nextSlide, slideInterval);
+        });
+    </script>
+</body>
+</html>
