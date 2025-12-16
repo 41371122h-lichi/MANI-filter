@@ -1,7 +1,8 @@
 # MANI Filter
 
 組員姓名：施樂琦 41371122H、洪于涵 41371223H
-
+ 
+· [🔗  線上網站](https://41371122h-lichi.github.io/MANI-filter/MANIfilter)
 
 · [Youtube Demo 影片](https://youtu.be/rHeXwhdD_3k)
 
@@ -12,8 +13,6 @@
 
 透過直觀的操作介面，使用者可以依照個人喜好快速篩選出合適的動畫或漫畫作品，  
 也能透過趣味性的隨機轉盤，輕鬆決定下一部要追的作品。
- 
-· [🔗  線上網站](https://41371122h-lichi.github.io/MANI-filter/MANIfilter)
 
 ---
 
